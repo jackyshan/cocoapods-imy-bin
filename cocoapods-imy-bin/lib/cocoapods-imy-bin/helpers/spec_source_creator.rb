@@ -49,7 +49,8 @@ module CBin
       end
 
       def filename
-        @filename ||= "#{CBin::Config::Builder.instance.binary_json_dir_name}/#{spec.name}.binary.podspec.json"
+        # @filename ||= "#{CBin::Config::Builder.instance.binary_json_dir_name}/#{spec.name}.binary.podspec.json"
+        @filename ||= "#{CBin::Config::Builder.instance.binary_json_dir_name}/#{spec.name}.podspec.json"
       end
 
       private

@@ -1,6 +1,6 @@
 
 module CBin
-  VERSION = '0.3.1.2'
+  VERSION = '3.3.1.4'#自研修改去掉binary生成podspec
 end
 
 module Pod

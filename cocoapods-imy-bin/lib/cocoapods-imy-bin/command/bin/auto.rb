@@ -136,7 +136,8 @@ module Pod
         end
 
         def binary_podsepc_json
-          "#{@specification.name}.binary.podspec.json"
+#          "#{@specification.name}.binary.podspec.json"
+          "#{@specification.name}.podspec.json"
         end
 
         def binary_template_podsepc

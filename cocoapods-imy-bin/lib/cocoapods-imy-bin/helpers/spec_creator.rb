@@ -50,7 +50,8 @@ module CBin
       end
 
       def filename
-        @filename ||= "#{spec.name}.binary.podspec.json"
+        # @filename ||= "#{spec.name}.binary.podspec.json"
+        @filename ||= "#{spec.name}.podspec.json"
       end
 
       private
