@@ -1,6 +1,9 @@
 
 module CBin
-  VERSION = '3.3.1.4'#自研修改去掉binary生成podspec
+  VERSION = '3.3.1.5'
+  #自研
+  #修改去掉binary生成podspec
+  #修改specification.from_file过滤subspecs集合到bin
 end
 
 module Pod

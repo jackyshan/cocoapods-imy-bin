@@ -1,6 +1,7 @@
 
 require 'cocoapods-imy-bin/command/bin/auto'
 require 'cocoapods-imy-bin/helpers/upload_helper'
+require 'cocoapods-imy-bin/helpers/subspec_auto'
 
 module Pod
   class Command
@@ -30,7 +31,7 @@ module Pod
           CBin.config.set_configuration_env(@env)
 
           @podspec = argv.shift_argument || find_podspec
-          @specification = Specification.from_file(@podspec)
+          @specification = SubspecAuto.from_file(@podspec)
 
           @code_dependencies = argv.flag?('code-dependencies')
           @allow_prerelease = argv.flag?('allow-prerelease')
@@ -52,7 +53,7 @@ module Pod
         end
 
         def run
-          @specification = Specification.from_file(@podspec)
+          @specification = SubspecAuto.from_file(@podspec)
 
           source_specs = run_archive
 
@@ -164,9 +165,9 @@ module Pod
                              end
 
                              spec_file = if @binary
-                                           code_spec = Pod::Specification.from_file(code_spec_files.first)
+                                           code_spec = SubspecAuto.from_file(code_spec_files.first)
                                            if template_spec_file
-                                             template_spec = Pod::Specification.from_file(template_spec_file)
+                                             template_spec = SubspecAuto.from_file(template_spec_file)
                                            end
                                            create_binary_spec_file(code_spec, template_spec)
                                          else

@@ -7,6 +7,7 @@ require 'cocoapods-imy-bin/helpers/build_helper'
 require 'cocoapods-imy-bin/helpers/spec_source_creator'
 require 'cocoapods-imy-bin/config/config_builder'
 require 'cocoapods-imy-bin/command/bin/lib/lint'
+require 'cocoapods-imy-bin/helpers/subspec_auto'
 
 module Pod
   class Command
@@ -115,6 +116,8 @@ module Pod
             next if spec.attributes_hash['vendored_frameworks'] && @spec.name != spec.name #过滤带有vendored_frameworks的
             next if spec.attributes_hash['ios.vendored_frameworks'] && @spec.name != spec.name #过滤带有vendored_frameworks的
             #获取没有制作二进制版本的spec集合
+            #修改包含subspec的spec
+            spec = SubspecAuto.handle(spec)
             source_specs << spec
           end
 
