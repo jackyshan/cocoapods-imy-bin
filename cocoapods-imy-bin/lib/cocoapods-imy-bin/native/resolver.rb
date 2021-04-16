@@ -30,6 +30,32 @@ module Pod
       end
     end
 
+    def find_cached_set(dependency)
+      name = dependency.root_name
+      cached_sets[name] ||= begin
+        if dependency.external_source
+          spec = sandbox.specification(name)
+          unless spec
+            raise StandardError, '[Bug] Unable to find the specification ' \
+              "for `#{dependency}`."
+          end
+          # puts 'sandbox.specification(name)'
+          # puts spec.name
+          # puts spec.default_subspecs
+          set = Specification::Set::External.new(spec)
+        else
+          set = create_set_from_sources(dependency)
+        end
+
+        unless set
+          raise Molinillo::NoSuchDependencyError.new(dependency) # rubocop:disable Style/RaiseArgs
+        end
+
+        set
+      end
+    end
+
+
     if Pod.match_version?('~> 1.4')
       def specifications_for_dependency(dependency, additional_requirements_frozen = [])
         additional_requirements = additional_requirements_frozen.dup.compact
@@ -52,6 +78,10 @@ module Pod
                            .all_specifications(options.warn_for_multiple_pod_sources)
                            .select { |s| requirement.satisfied_by? s.version }
         end
+
+        specifications = specifications.map { |s| SubspecAuto.handle(s) }
+        # puts 'set.specifications'
+        # puts specifications.each { |s| puts s.default_subspecs}
 
         specifications
           .map { |s| s.subspec_by_name(dependency.name, false, true) }

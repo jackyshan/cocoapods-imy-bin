@@ -33,8 +33,11 @@ class SubspecAuto
 
 	def handle_spec
 		puts spec.name
-		if spec.default_subspecs.empty?
-			puts '不存在default_subspecs'
+		if spec.subspecs.empty?
+			puts '不存在subspecs'
+			return
+		elsif spec.default_subspecs.include?('InkeBin')
+			puts '存在InkeBin'
 			return
 		end
 		puts '存在default_subspecs，修改spec_hash'
@@ -51,8 +54,8 @@ class SubspecAuto
 
 		#把subspec集合到Bin
 		subnames = subspecs.map { |sub| sub['name']}
-		spec_hash['default_subspecs'] = 'Bin'
-		bin = Hash["name" => 'Bin']
+		spec_hash['default_subspecs'] = 'InkeBin'
+		bin = Hash["name" => 'InkeBin']
 		dependencies = Hash[]
 		subnames.each { |name|
 			dependencies["#{spec_hash['name']}/#{name}"] = Array.new

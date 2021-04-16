@@ -6,6 +6,16 @@ require 'cocoapods-imy-bin/native/pod_source_installer'
 
 module Pod
   class Installer
+
+    def download_dependencies
+      UI.section 'Downloading dependencies' do
+        install_pod_sources
+        run_podfile_pre_install_hooks
+        clean_pod_sources
+      end
+    end
+
+
     alias old_create_pod_installer create_pod_installer
     def create_pod_installer(pod_name)
       installer = old_create_pod_installer(pod_name)

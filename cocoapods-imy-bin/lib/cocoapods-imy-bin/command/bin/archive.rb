@@ -67,7 +67,7 @@ module Pod
           zip_dir = CBin::Config::Builder.instance.zip_dir
           FileUtils.rm_rf(zip_dir) if File.exist?(zip_dir)
 
-          @spec = Specification.from_file(spec_file)
+          @spec = SubspecAuto.from_file(spec_file)
           generate_project
 
           source_specs = Array.new
@@ -117,7 +117,7 @@ module Pod
             next if spec.attributes_hash['ios.vendored_frameworks'] && @spec.name != spec.name #过滤带有vendored_frameworks的
             #获取没有制作二进制版本的spec集合
             #修改包含subspec的spec
-            spec = SubspecAuto.handle(spec)
+            # spec = SubspecAuto.handle(spec)
             source_specs << spec
           end
 

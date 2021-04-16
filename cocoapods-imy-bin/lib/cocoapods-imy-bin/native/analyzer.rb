@@ -2,6 +2,7 @@
 
 require 'parallel'
 require 'cocoapods'
+require 'cocoapods-imy-bin/helpers/subspec_auto'
 
 module Pod
   class Installer
@@ -49,6 +50,13 @@ module Pod
         end
       end
 
+      alias old_generate_specifications generate_specifications
+      def generate_specifications(resolver_specs_by_target)
+        specifications = old_generate_specifications(resolver_specs_by_target)
+        specifications.map { |spec| SubspecAuto.handle(spec) }
+      end
+
+      
 
     end
   end
