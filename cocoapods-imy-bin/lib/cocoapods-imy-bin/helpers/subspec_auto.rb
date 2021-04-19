@@ -47,6 +47,7 @@ class SubspecAuto
 		#把subspec的依赖集合到最上层
 		dps_hash = Hash[]
 		subdps = subspecs.each do |sub| 
+			sub.delete('exclude_files')
 			dps_hash = dps_hash.merge(Hash(sub['dependencies']))
 		end
 		dps_hash = dps_hash.reject { |key, value| key.include?(spec_hash['name'])}
